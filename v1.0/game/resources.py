@@ -1,4 +1,14 @@
 import pyglet
-import bullet
+#from . import bullet
 
-bullet = Bullet(pyglet.resource.image('bullet.png'))
+pyglet.resource.path = ["../resources"]
+pyglet.resource.reindex()
+
+bullet_image = pyglet.resource.image('bullet.png')
+
+tank_image = pyglet.resource.image('tank_body.png')
+
+
+hose_image = pyglet.resource.image('tank_hose.png')
+hose_image.anchor_x = 0
+hose_image.anchor_y = hose_image.width/2
