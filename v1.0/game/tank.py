@@ -8,8 +8,8 @@ class Tank(pyglet.sprite.Sprite):
         self.angle = 45
         self.hose = pyglet.sprite.Sprite(img=resources.hose_image)
         self.hose.x = self.width/2 - self.hose.width/2
-        self.hose.y = self.y
-        #self.rotation = self.angle
+        self.hose.y = self.hose.width
+        self.hose.rotation = self.angle
 
         self.bullet = None
         self.force = 200
@@ -32,14 +32,10 @@ class Tank(pyglet.sprite.Sprite):
         self.bullet.shootForce(self.force)
 
     def rotate(self, dt):
-#        print("Rotate")
-#        print(self.key_handler[key.UP])
         if(self.key_handler[key.UP]):
- #           print("Gor")
-            self.hose.rotation += self.rotate_speed * dt
-        elif(self.key_handler[key.DOWN]):
-  #          print("Dol")
             self.hose.rotation -= self.rotate_speed * dt
+        elif(self.key_handler[key.DOWN]):
+            self.hose.rotation += self.rotate_speed * dt
         
  
     
