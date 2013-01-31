@@ -34,8 +34,12 @@ class Tank(pyglet.sprite.Sprite):
     def rotate(self, dt):
         if(self.key_handler[key.UP]):
             self.hose.rotation -= self.rotate_speed * dt
+            if(self.hose.rotation > 90 and self.hose.rotation < 270):
+                self.hose.rotation = 90
         elif(self.key_handler[key.DOWN]):
             self.hose.rotation += self.rotate_speed * dt
+            if(self.hose.rotation > 90 and self.hose.rotation < 270):
+                self.hose.rotation = 90
         
  
     
