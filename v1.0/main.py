@@ -2,7 +2,9 @@ import pyglet
 from game import bullet
 from game import resources
 from game import tank
-from game import landscape as ls
+
+from game.maps import *
+
 from game.screen import *
 
 
@@ -17,17 +19,17 @@ def on_draw():
     test.draw()
    
 def update(dt):
-#    metek1.update(dt)
+
     test.update(dt)
     
 
-#metek1 = bullet.Bullet()
+
 test = tank.Tank()
 test.shoot()
 
 game_window.push_handlers(test.key_handler)
 
-landscape = ls.Landscape(color = (1, 1, 1))
+
 
 
 
