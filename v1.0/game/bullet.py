@@ -7,7 +7,8 @@ class Bullet(pyglet.sprite.Sprite):
         super().__init__(img = resources.bullet_image, batch = tank.bulletsBatch, *args,**kwargs)
         self.tank = tank
         self.angle=-self.tank.hose.rotation + 90
-        
+
+        self.dmg = 20
         
         self.x = self.tank.x + self.tank.width/2 + math.cos(math.radians(self.angle))*self.tank.hose.height
         self.y = self.tank.y + self.tank.hose.width/2 + math.sin(math.radians(self.angle))*self.tank.hose.height

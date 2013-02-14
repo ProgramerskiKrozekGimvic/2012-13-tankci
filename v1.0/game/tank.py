@@ -1,5 +1,6 @@
 
 import pyglet
+from pyglet.gl import *
 from pyglet.window import key
 from . import bullet
 from . import resources
@@ -24,21 +25,27 @@ class Tank(pyglet.sprite.Sprite):
         self.force = 600
         self.rotate_speed = 50
         self.key_handler = key.KeyStateHandler()
-
+        self.hp = 100
         self.bullets = []
         self.bulletsBatch = pyglet.graphics.Batch()
-
+        self.hpBar = True
         self.timerbase = 1
         self.timer = self.timerbase
-
-    
+        
 
 
     def draw(self):
         self.hose.draw()
-    
         self.bulletsBatch.draw()
         super().draw()
+        #hpbar 
+        glColor3f(1, 0, 0)
+        pyglet.graphics.draw_indexed(4, GL_TRIANGLES, [0, 1, 2, 0, 2, 3], 
+                         ('v2i', (self.x, self.y + self.height + 30,
+                                  self.x, self.y + self.height + 20,
+                                  self.x + int(self.width*(self.hp / 100)), self.y + self.height + 20,
+                                  self.x + int(self.width*(self.hp / 100)), self.y + self.height + 30))
+                                 )    
         
 
     def chooseBullet(self, bullet):
@@ -48,23 +55,33 @@ class Tank(pyglet.sprite.Sprite):
         self.timer -= dt
         self.keys()
         self.rotate(dt)
-       
+        self.isHit()
         for i in self.bullets[:]:
             i.update(dt)
             if(i.x <= 0 or i.x >=500):
                 self.bullets.remove(i)
             if(i.y <= landscape.height):
                 self.bullets.remove(i)
-       
-       
+                
+    def isHit(self):
+        for i in self.bullets[:]:
+            if((i.x > self.x and i.x < self.x + self.width)
+               and(i.y > self.y and i.y < self.y + self.height)):
+               self.hp -= i.dmg
+               self.bullets.remove(i)
+    """
+    def ifAlive(self):
+        if(self.hp == 0):
+            self.delete()
+    """
+               
 
     def shoot(self):
         if(self.timer <= 0):
             self.bullets.append(bullet.Bullet(self))
             self.timer = self.timerbase
-            print(self.bullets)
-        
-                    
+            
+                        
 
     def rotate(self, dt):
         if(self.key_handler[self.key2]):
