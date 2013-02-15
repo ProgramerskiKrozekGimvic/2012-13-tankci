@@ -19,8 +19,8 @@ def on_draw():
 def update(dt):
     test.update(dt)
     test2.update(dt)
-    #test.ifAlive()
-    #test2.ifAlive()
+    test.ifAlive()
+    test2.ifAlive()
     print(test.hp)
     print(test2.hp)
     

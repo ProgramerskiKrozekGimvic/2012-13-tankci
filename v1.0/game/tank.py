@@ -1,4 +1,4 @@
-
+from . import splosno
 import pyglet
 from pyglet.gl import *
 from pyglet.window import key
@@ -26,7 +26,7 @@ class Tank(pyglet.sprite.Sprite):
         self.rotate_speed = 50
         self.key_handler = key.KeyStateHandler()
         self.hp = 100
-        self.bullets = []
+
         self.bulletsBatch = pyglet.graphics.Batch()
         self.hpBar = True
         self.timerbase = 1
@@ -56,29 +56,29 @@ class Tank(pyglet.sprite.Sprite):
         self.keys()
         self.rotate(dt)
         self.isHit()
-        for i in self.bullets[:]:
+        for i in splosno.bullets[:]:
             i.update(dt)
             if(i.x <= 0 or i.x >=500):
-                self.bullets.remove(i)
+                splosno.bullets.remove(i)
             if(i.y <= landscape.height):
-                self.bullets.remove(i)
+                splosno.bullets.remove(i)
                 
     def isHit(self):
-        for i in self.bullets[:]:
+        for i in splosno.bullets[:]:
             if((i.x > self.x and i.x < self.x + self.width)
                and(i.y > self.y and i.y < self.y + self.height)):
                self.hp -= i.dmg
-               self.bullets.remove(i)
-    """
+               splosno.bullets.remove(i)
+    
     def ifAlive(self):
         if(self.hp == 0):
             self.delete()
-    """
+    
                
 
     def shoot(self):
         if(self.timer <= 0):
-            self.bullets.append(bullet.Bullet(self))
+            splosno.bullets.append(bullet.Bullet(self))
             self.timer = self.timerbase
             
                         
