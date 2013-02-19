@@ -7,6 +7,7 @@ from . import resources
 from time import time
 from .screen import *
 from .maps import *
+from .splosno import *
 
 class Tank(pyglet.sprite.Sprite):
     def __init__(self,key1= None,key2 = None,key3 = None,x = None, *args,**kwargs):
@@ -22,7 +23,7 @@ class Tank(pyglet.sprite.Sprite):
         self.hose.x = self.x + self.width/2 
         self.hose.y = self.y + self.hose.width
         self.hose.rotation = self.angle
-        self.force = 600
+        self.force = 1000
         self.rotate_speed = 50
         self.key_handler = key.KeyStateHandler()
         self.hp = 100
@@ -31,6 +32,15 @@ class Tank(pyglet.sprite.Sprite):
         self.hpBar = True
         self.timerbase = 1
         self.timer = self.timerbase
+        self.timer2 = self.timerbase
+        resources.explosion.x = self.x
+        resources.explosion.y = self.y
+        
+        
+        
+
+
+        game_window.push_handlers(self.key_handler)
         
 
 
@@ -58,29 +68,38 @@ class Tank(pyglet.sprite.Sprite):
         self.isHit()
         for i in splosno.bullets[:]:
             i.update(dt)
-            if(i.x <= 0 or i.x >=500):
+            if(i.x <= 0 or i.x >=game_window.width):
                 splosno.bullets.remove(i)
             if(i.y <= landscape.height):
                 splosno.bullets.remove(i)
+            
                 
     def isHit(self):
         for i in splosno.bullets[:]:
-            if((i.x > self.x and i.x < self.x + self.width)
-               and(i.y > self.y and i.y < self.y + self.height)):
+            if((i.x >= self.x and i.x <= self.x + self.width)
+               and(i.y >= self.y and i.y <= self.y + self.height)):
                self.hp -= i.dmg
                splosno.bullets.remove(i)
+        self.ifAlive()
     
     def ifAlive(self):
-        if(self.hp == 0):
+        if(self.hp <= 0):
+            
             self.delete()
+            tank_list.remove(self)
+            resources.explosion.draw()
     
                
 
     def shoot(self):
-        if(self.timer <= 0):
+       if(self.timer <= 0):
             splosno.bullets.append(bullet.Bullet(self))
             self.timer = self.timerbase
             
+       
+        
+           
+           
                         
 
     def rotate(self, dt):
@@ -97,6 +116,7 @@ class Tank(pyglet.sprite.Sprite):
     def keys(self):
         if(self.key_handler[self.key1]):
             self.shoot()
+        
     
         
         

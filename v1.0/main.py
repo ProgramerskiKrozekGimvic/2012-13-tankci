@@ -5,6 +5,7 @@ from game import tank
 from pyglet.window import key
 from game.maps import *
 from game.screen import *
+from game.splosno import *
 
 
 
@@ -13,32 +14,23 @@ from game.screen import *
 def on_draw():
     game_window.clear()
     landscape.draw()
-    test.draw()
-    test2.draw()
+    for tank in tank_list:
+        tank.draw()
    
 def update(dt):
-    test.update(dt)
-    test2.update(dt)
-    test.ifAlive()
-    test2.ifAlive()
-    print(test.hp)
-    print(test2.hp)
+    for tank in tank_list:
+        tank.update(dt)
     
     
 
 
-test = tank.Tank(key1 = key.SPACE, key2  =key.UP, key3=key.DOWN,x = 50)
-test2 = tank.Tank(key1 = key.D, key2  =key.W, key3=key.S,x = 450)
-test.shoot()
-test2.shoot()
-
-game_window.push_handlers(test.key_handler)
-game_window.push_handlers(test2.key_handler)
+tank_list.append(tank.Tank(key1 = key.SPACE, key2  =key.UP, key3=key.DOWN,x = 50))
+tank_list.append(tank.Tank(key1 = key.D, key2  =key.W, key3=key.S,x = 1000))
 
 
 
 
 
 if(__name__== '__main__'):
-    pyglet.clock.schedule_interval(update, 1/60)
+    pyglet.clock.schedule_interval(update, 1/120)
     pyglet.app.run()

@@ -1,1 +1,2 @@
 bullets = []
+tank_list = []
