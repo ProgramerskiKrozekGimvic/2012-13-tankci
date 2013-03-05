@@ -27,6 +27,7 @@ class Tank(pyglet.sprite.Sprite):
         self.rotate_speed = 50
         self.key_handler = key.KeyStateHandler()
         self.hp = 100
+        self.alive = True
 
         self.bulletsBatch = pyglet.graphics.Batch()
         self.hpBar = True
@@ -42,7 +43,6 @@ class Tank(pyglet.sprite.Sprite):
 
         game_window.push_handlers(self.key_handler)
         
-
 
     def draw(self):
         self.hose.draw()
@@ -87,7 +87,8 @@ class Tank(pyglet.sprite.Sprite):
             
             self.delete()
             tank_list.remove(self)
-            resources.explosion.draw()
+            self.Alive = False
+            #resources.explosion.draw()
     
                
 
