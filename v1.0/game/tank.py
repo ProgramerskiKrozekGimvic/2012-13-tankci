@@ -8,6 +8,7 @@ from time import time
 from .screen import *
 from .maps import *
 from .splosno import *
+from . import explosion
 
 class Tank(pyglet.sprite.Sprite):
     def __init__(self,key1= None,key2 = None,key3 = None,x = None, *args,**kwargs):
@@ -28,14 +29,14 @@ class Tank(pyglet.sprite.Sprite):
         self.key_handler = key.KeyStateHandler()
         self.hp = 100
         self.alive = True
-
+        
         self.bulletsBatch = pyglet.graphics.Batch()
         self.hpBar = True
         self.timerbase = 1
         self.timer = self.timerbase
         self.timer2 = self.timerbase
-        resources.explosion.x = self.x
-        resources.explosion.y = self.y
+        
+       
         
         
         
@@ -72,6 +73,7 @@ class Tank(pyglet.sprite.Sprite):
                 splosno.bullets.remove(i)
             if(i.y <= landscape.height):
                 splosno.bullets.remove(i)
+        
             
                 
     def isHit(self):
@@ -84,11 +86,13 @@ class Tank(pyglet.sprite.Sprite):
     
     def ifAlive(self):
         if(self.hp <= 0):
-            
             self.delete()
+            explosion.Explosion.draw(self)
             tank_list.remove(self)
             self.Alive = False
-            #resources.explosion.draw()
+            
+            
+            
     
                
 

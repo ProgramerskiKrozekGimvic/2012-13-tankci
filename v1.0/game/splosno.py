@@ -1,3 +1,3 @@
 bullets = []
 tank_list = []
-#counter = 0
+explosions=[]
