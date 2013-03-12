@@ -89,7 +89,7 @@ class Tank(pyglet.sprite.Sprite):
     def ifAlive(self):
         if(self.hp <= 0):
             splosno.explosion_list.append(explosion.Explosion(self))
-            pyglet.clock.schedule_once(splosno.delete_exp, 2.16, name=splosno.explosion_list[-1])
+            pyglet.clock.schedule_once(splosno.delete_exp, 1.7, name=splosno.explosion_list[-1])
             self.delete()
             tank_list.remove(self)
             self.Alive = False
