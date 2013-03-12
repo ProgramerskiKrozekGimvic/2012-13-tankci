@@ -36,6 +36,7 @@ class Tank(pyglet.sprite.Sprite):
         self.timer = self.timerbase
         self.timer2 = self.timerbase
         
+        
        
         
         
@@ -82,14 +83,17 @@ class Tank(pyglet.sprite.Sprite):
                and(i.y >= self.y and i.y <= self.y + self.height)):
                self.hp -= i.dmg
                splosno.bullets.remove(i)
+               
         self.ifAlive()
     
     def ifAlive(self):
         if(self.hp <= 0):
+            splosno.explosion_list.append(explosion.Explosion(self))
+            pyglet.clock.schedule_once(splosno.delete_exp, 2.16, name=splosno.explosion_list[-1])
             self.delete()
-            explosion.Explosion.draw(self)
             tank_list.remove(self)
             self.Alive = False
+            
             
             
             
@@ -102,7 +106,7 @@ class Tank(pyglet.sprite.Sprite):
             self.timer = self.timerbase
             
        
-        
+                 
            
            
                         

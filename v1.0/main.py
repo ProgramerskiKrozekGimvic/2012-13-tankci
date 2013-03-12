@@ -6,6 +6,7 @@ from pyglet.window import key
 from game.maps import *
 from game.screen import *
 from game.splosno import *
+from game import explosion
 
 
 
@@ -16,10 +17,13 @@ def on_draw():
     landscape.draw()
     for tank in tank_list:
         tank.draw()
+    for i in explosion_list:
+        i.draw()
     
    
 def update(dt):
     counter = 0
+
     for tank in tank_list:
         tank.update(dt)
         
@@ -30,6 +34,8 @@ def update(dt):
             counter += 1
     if(counter <= 1):
         game_window.close()
+
+    
     
     
 #preberemo stevilo igralcev
@@ -40,8 +46,12 @@ keys = [ {"key1": key.W, "key2": key.A,"key3":key.D},
          {"key1": key.I, "key2": key.J,"key3":key.L},
          {"key1": key.NUM_8, "key2": key.NUM_4,"key3":key.NUM_6} ]
 
+
+
 for i in range(stIgralcev):
     tank_list.append(tank.Tank(x=i*350, **keys[i]))
+   
+        
 
 
 
