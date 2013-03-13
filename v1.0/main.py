@@ -33,10 +33,14 @@ def update(dt):
 
             counter += 1
     if(counter <= 1):
-        game_window.close()
+        pyglet.clock.schedule_once(end_game,3)
+
+        
 
     
     
+def end_game(dt):
+    game_window.close()
     
 #preberemo stevilo igralcev
 stIgralcev = int(input("Number of players"))
