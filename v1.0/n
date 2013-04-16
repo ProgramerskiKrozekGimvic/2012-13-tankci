@@ -1,9 +1,0 @@
-import pyglet
-window = pyglet.window.Window(width=200,height=200)
-label = pyglet.text.Label(text="on je gej",x = 50,y = 50, color =(254,234,34), font_size = 2.4)
-@window.event
-def draw(self):
-    window.clear()
-    label.draw()
-
-pyglet.app.run()
