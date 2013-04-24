@@ -10,12 +10,13 @@ class Landscape():
             self.height = game_window.width //4
         else:       
             self.height = height
+        image_bmp = [
 
     def draw(self):
-        glColor3f(*self.color)
+        '''glColor3f(*self.color)
         pyglet.graphics.draw_indexed(4, GL_TRIANGLES, [0, 1, 2, 0, 2, 3], 
                          ('v2i', (0, 0,
                                   0, self.height,
                                   game_window.width, self.height,
                                   game_window.width, 0 ))
-                                 )
+                                 )'''

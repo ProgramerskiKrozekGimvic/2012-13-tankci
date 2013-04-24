@@ -14,7 +14,7 @@ class Bullet(pyglet.sprite.Sprite):
         self.dy = self.y - self.tank.hose.y
         self.vx = (self.dx/ ((self.dx**2 + self.dy**2)**(1/2)))* self.tank.force        
         self.vy = (self.dy/ ((self.dx**2 + self.dy**2)**(1/2)))* self.tank.force
-        self.gravity=1000
+        self.gravity=500
         
     
     def update(self,dt):

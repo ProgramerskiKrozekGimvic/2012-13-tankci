@@ -24,7 +24,8 @@ class Tank(pyglet.sprite.Sprite):
         self.hose.x = self.x + self.width/2 
         self.hose.y = self.y + self.hose.width
         self.hose.rotation = self.angle
-        self.force = 1000
+        self.force = 0
+        self.forceMod = 400
         self.rotate_speed = 50
         self.key_handler = key.KeyStateHandler()
         self.hp = 100
@@ -35,6 +36,8 @@ class Tank(pyglet.sprite.Sprite):
         self.timerbase = 1
         self.timer = self.timerbase
         self.timer2 = self.timerbase
+
+        self.shooting = None
         
         
        
@@ -51,12 +54,20 @@ class Tank(pyglet.sprite.Sprite):
         self.bulletsBatch.draw()
         super().draw()
         #hpbar 
-        glColor3f(1, 0, 0)
-        pyglet.graphics.draw_indexed(4, GL_TRIANGLES, [0, 1, 2, 0, 2, 3], 
+        
+        pyglet.graphics.draw_indexed(4, GL_TRIANGLES, [0, 1, 2, 0, 2, 3],('c4B', (255,0,0,255)*4),
                          ('v2i', (self.x, self.y + self.height + 30,
                                   self.x, self.y + self.height + 20,
                                   self.x + int(self.width*(self.hp / 100)), self.y + self.height + 20,
-                                  self.x + int(self.width*(self.hp / 100)), self.y + self.height + 30))
+                                  self.x + int(self.width*(self.hp / 100)), self.y + self.height + 30)))
+                                 
+        #pawabar 
+        pyglet.graphics.draw_indexed(4, GL_TRIANGLES, [0, 1, 2, 0, 2, 3],('c4B', (0,255,255,255)*4), 
+                         ('v2i', (self.x, self.y + self.height + 40,
+                                  self.x, self.y + self.height + 30,
+                                  self.x + int(self.width*(self.force / 1000)), self.y + self.height + 30,
+                                  self.x + int(self.width*(self.force / 1000)), self.y + self.height + 40))
+                                     
                                  )    
         
 
@@ -68,6 +79,7 @@ class Tank(pyglet.sprite.Sprite):
         self.keys()
         self.rotate(dt)
         self.isHit()
+        self.shoot(dt)
         for i in splosno.bullets[:]:
             i.update(dt)
             if(i.x <= 0 or i.x >=game_window.width):
@@ -94,23 +106,18 @@ class Tank(pyglet.sprite.Sprite):
             tank_list.remove(self)
             self.Alive = False
             
+    def shoot(self, dt):
+        if(self.timer <= 0):
+            if(self.shooting):
+                if(self.force>=1000 or self.force<0):
+                    self.forceMod = -self.forceMod
+                self.force += self.forceMod * dt
+            elif(self.shooting == False):
+                splosno.bullets.append(bullet.Bullet(self))
+                self.timer = self.timerbase
+                self.shooting = None
+                self.force = 0
             
-            
-            
-    
-               
-
-    def shoot(self):
-       if(self.timer <= 0):
-            splosno.bullets.append(bullet.Bullet(self))
-            self.timer = self.timerbase
-            
-       
-                 
-           
-           
-                        
-
     def rotate(self, dt):
         if(self.key_handler[self.key2]):
             self.hose.rotation -= self.rotate_speed * dt
@@ -123,8 +130,13 @@ class Tank(pyglet.sprite.Sprite):
 
 
     def keys(self):
+        if(self.shooting == True):
+            self.shooting = False
+        
         if(self.key_handler[self.key1]):
-            self.shoot()
+            self.shooting = True
+            
+        
         
     
         

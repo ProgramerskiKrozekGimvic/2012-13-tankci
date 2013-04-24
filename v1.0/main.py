@@ -40,12 +40,9 @@ def on_mouse_press(x, y, button, modifiers):
         elif(button.lower() == "down"):
             splosno.NumPlayer -= 1
             game_menu.player_counter.text = str(splosno.NumPlayer)
-            
-    
+
    
-def update(dt):
-    
-        
+def update(dt):    
     if(game_playing):
         counter = 0
 
@@ -65,9 +62,9 @@ def update(dt):
 
 def initGame():
     keys = [ {"key1": key.W, "key2": key.A,"key3":key.D},
-         {"key1": key.UP, "key2": key.LEFT,"key3":key.RIGHT},
-         {"key1": key.I, "key2": key.J,"key3":key.L},
-         {"key1": key.NUM_8, "key2": key.NUM_4,"key3":key.NUM_6} ]
+             {"key1": key.UP, "key2": key.LEFT,"key3":key.RIGHT},
+             {"key1": key.I, "key2": key.J,"key3":key.L},
+             {"key1": key.NUM_8, "key2": key.NUM_4,"key3":key.NUM_6} ]
     
     for i in range(splosno.NumPlayer):
         splosno.tank_list.append(tank.Tank(x=i*350, **keys[i]))    
